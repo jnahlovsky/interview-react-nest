@@ -3,11 +3,11 @@
     "private": true,
     "version": "1.0.0",
     "description": "Interview task for FE Developer position at Apify",
-    "dependencies": {},
     "devDependencies": {
+        "@apify/eslint-config": "^0.4.0",
         "@typescript-eslint/eslint-plugin": "^6.0.0",
         "@typescript-eslint/parser": "^6.0.0",
-        "eslint": "^8.55.0",
+        "eslint": "^8.57.1",
         "eslint-plugin-cypress": "^2.15.1",
         "eslint-plugin-react": "^7.33.2",
         "eslint-plugin-react-hooks": "^4.6.0",
