@@ -105,7 +105,12 @@ export class AppService {
      * @returns Array of neighborhoods. Each neighborhood contains the type of the cell, the value of the neighborhood and the cells of the neighborhood,
      * The ID of the neighborhood is the coordinates of the central cell in the matrix.
      */
-    public matrixToNeighborhoods(matrix: Matrix): any { // TODO: Define the return type of this method
+    public matrixToNeighborhoods(matrix: Matrix): Array<{
+        type: string;
+        id: string;
+        value: number;
+        cells: Array<Array<string | number | undefined>>;
+    }> {
         const matrixDimension = matrix.length;
         const neighborhoods = [];
 
