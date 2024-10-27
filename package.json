@@ -1,0 +1,26 @@
+{
+    "name": "apify-fe-interview-task",
+    "private": true,
+    "version": "1.0.0",
+    "description": "Interview task for FE Developer position at Apify",
+    "dependencies": {},
+    "devDependencies": {
+        "@typescript-eslint/eslint-plugin": "^6.0.0",
+        "@typescript-eslint/parser": "^6.0.0",
+        "eslint": "^8.55.0",
+        "eslint-plugin-cypress": "^2.15.1",
+        "eslint-plugin-react": "^7.33.2",
+        "eslint-plugin-react-hooks": "^4.6.0",
+        "eslint-plugin-react-refresh": "^0.4.5"
+    },
+    "scripts": {
+        "backend": "cd backend && npm run start:dev",
+        "frontend": "cd frontend && npm run dev",
+        "test:backend": "cd backend && npm run test",
+        "test:frontend:components": "cd frontend && npm run test:components",
+        "test:frontend:e2e": "cd frontend && npm run test:e2e",
+        "lint": "eslint . --ext ts,js,jsx --report-unused-disable-directives --max-warnings 0"
+    },
+    "author": "Apify",
+    "license": "ISC"
+}
