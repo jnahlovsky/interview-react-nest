@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
 
-import { dateToString } from './helpers/utils';
+import { dateToString, symbolToIcon } from './helpers/utils';
 
 const HeaderContainer = styled.header`
     position: relative;
@@ -112,6 +112,34 @@ const ProgressBar = styled.div`
   ${progressAnimation}
 `;
 
+const SymbolButtonGroup = styled.div`
+  display: flex;
+  gap: 8px;
+  margin-right: 16px;
+`;
+
+const SymbolButton = styled.button`
+  background: ${props => props.$isSelected ? 'var(--primary-color)' : 'var(--card-bg)'};
+  border: 2px solid ${props => props.$isSelected ? 'var(--primary-color)' : 'transparent'};
+  padding: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+
+  svg {
+    width: 24px;
+    height: 24px;
+    fill: white;
+  }
+
+  &:hover {
+    background: var(--hover-color);
+  }
+`;
+
 // TODO: This component should contain the controls for the app
 // The controls are:
 // - A toggle group to select the currently active symbol
@@ -125,6 +153,8 @@ function Header({
     currentDateTime,
     currentPeriod,
     isPopoverOpen,
+    selectedSymbol,
+    setSelectedSymbol,
 }) {
     const [shouldShowProgress, setShouldShowProgress] = useState(true);
     const seconds = currentDateTime.getSeconds();
@@ -142,6 +172,10 @@ function Header({
         }
     }, [isTimeFilterEnabled, isPopoverOpen]);
 
+    const handleSymbolClick = (symbol) => {
+        setSelectedSymbol(current => current === symbol ? null : symbol);
+    };
+
     return (
         <HeaderContainer>
             <HeaderTime>
@@ -152,18 +186,32 @@ function Header({
                     </PeriodPill>
                 )}
             </HeaderTime>
-            <ToggleLabel>
-                <ToggleSwitch htmlFor="filter_by_time_period">
-                    <input
-                        type="checkbox"
-                        id="filter_by_time_period"
-                        checked={isTimeFilterEnabled}
-                        onChange={(e) => setIsTimeFilterEnabled(e.target.checked)}
-                    />
-                    <span></span>
-                </ToggleSwitch>
-                Filter by time period
-            </ToggleLabel>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+                <SymbolButtonGroup>
+                    {Object.entries(symbolToIcon).map(([symbol, Icon]) => (
+                        <SymbolButton
+                            key={symbol}
+                            onClick={() => handleSymbolClick(symbol)}
+                            $isSelected={selectedSymbol === symbol}
+                            aria-label={symbol}
+                        >
+                            <Icon />
+                        </SymbolButton>
+                    ))}
+                </SymbolButtonGroup>
+                <ToggleLabel>
+                    <ToggleSwitch htmlFor="filter_by_time_period">
+                        <input
+                            type="checkbox"
+                            id="filter_by_time_period"
+                            checked={isTimeFilterEnabled}
+                            onChange={(e) => setIsTimeFilterEnabled(e.target.checked)}
+                        />
+                        <span></span>
+                    </ToggleSwitch>
+                    Filter by time period
+                </ToggleLabel>
+            </div>
             {isTimeFilterEnabled && (
                 <ProgressBarContainer 
                     key={periodKey} 
@@ -185,6 +233,8 @@ Header.propTypes = {
     currentDateTime: PropTypes.instanceOf(Date).isRequired,
     currentPeriod: PropTypes.number.isRequired,
     isPopoverOpen: PropTypes.bool.isRequired,
+    selectedSymbol: PropTypes.string,
+    setSelectedSymbol: PropTypes.func.isRequired,
 };
 
 export default Header;
