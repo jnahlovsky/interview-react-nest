@@ -1,9 +1,11 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { useState, useEffect } from 'react';
 
 import { dateToString } from './helpers/utils';
 
 const HeaderContainer = styled.header`
+    position: relative;
     background-color: var(--card-bg);
     padding: 1.6rem;
     display: flex;
@@ -76,6 +78,40 @@ const PeriodPill = styled.span`
   margin-left: 0.5rem;
 `;
 
+const ProgressBarContainer = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background-color: rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  opacity: ${props => props.$shouldShow ? 1 : 0};
+  transition: opacity 0.3s ease;
+`;
+
+const progressAnimation = `
+  @keyframes progress {
+    from {
+      width: 0%;
+    }
+    to {
+      width: 100%;
+    }
+  }
+`;
+
+const ProgressBar = styled.div`
+  height: 100%;
+  background-color: var(--success-color);
+  transform-origin: left;
+  transition: width 0.95s linear;
+  ${props => props.$isAnimating && `
+    animation: progress ${10 - (props.$initialSeconds % 10)}s linear forwards;
+  `}
+  ${progressAnimation}
+`;
+
 // TODO: This component should contain the controls for the app
 // The controls are:
 // - A toggle group to select the currently active symbol
@@ -90,12 +126,30 @@ function Header({
     currentPeriod,
     isPopoverOpen,
 }) {
+    const [shouldShowProgress, setShouldShowProgress] = useState(true);
+    const seconds = currentDateTime.getSeconds();
+    const milliseconds = currentDateTime.getMilliseconds();
+    const periodKey = Math.floor(seconds / 10);
+    
+    // Calculate initial progress based on current time within the 10-second interval
+    const initialProgress = ((seconds % 10) * 1000 + milliseconds) / 10000 * 100;
+
+    useEffect(() => {
+        if (!isTimeFilterEnabled || isPopoverOpen) {
+            setShouldShowProgress(false);
+        } else {
+            setShouldShowProgress(true);
+        }
+    }, [isTimeFilterEnabled, isPopoverOpen]);
+
     return (
         <HeaderContainer>
             <HeaderTime>
                 {dateToString(currentDateTime)}
                 {isTimeFilterEnabled && (
-                    <PeriodPill $isFreezed={isPopoverOpen}>Period {currentPeriod} {isPopoverOpen && '(Freezed)'}</PeriodPill>
+                    <PeriodPill $isFreezed={isPopoverOpen}>
+                        Period {currentPeriod} {isPopoverOpen && '(Freezed)'}
+                    </PeriodPill>
                 )}
             </HeaderTime>
             <ToggleLabel>
@@ -110,6 +164,17 @@ function Header({
                 </ToggleSwitch>
                 Filter by time period
             </ToggleLabel>
+            {isTimeFilterEnabled && (
+                <ProgressBarContainer 
+                    key={periodKey} 
+                    $shouldShow={shouldShowProgress}
+                >
+                    <ProgressBar 
+                        style={{ width: `${initialProgress}%` }}
+                        $isAnimating={true} 
+                    />
+                </ProgressBarContainer>
+            )}
         </HeaderContainer>
     );
 }
