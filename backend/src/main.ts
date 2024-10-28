@@ -7,6 +7,6 @@ async function bootstrap() {
     const app = await NestFactory.create<NestExpressApplication>(AppModule);
     app.useBodyParser('json', { limit: '10mb' });
     app.enableCors();
-    await app.listen(5001);
+    await app.listen(3001);
 }
 bootstrap();

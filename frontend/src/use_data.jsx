@@ -18,7 +18,7 @@ function useData() {
         const fetchData = async () => {
             try {
                 // SUGGESTION: use client/service instead
-                const response = await fetch('http://localhost:5001', {
+                const response = await fetch('http://localhost:3001', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
