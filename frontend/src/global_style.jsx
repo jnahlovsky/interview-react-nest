@@ -90,25 +90,6 @@ export const GlobalStyle = createGlobalStyle`
         padding: 2rem;
     }
 
-    .Neighborhood {
-        background-color: var(--card-bg);
-        border-radius: 8px;
-        padding: 1.6rem;
-        transition: all 0.3s ease;
-        cursor: pointer;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        aspect-ratio: 1;
-
-        &:hover {
-            background-color: var(--hover-color);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-    }
-
     button {
         background-color: var(--primary-color);
         color: white;

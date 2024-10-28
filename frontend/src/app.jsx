@@ -12,7 +12,7 @@ const AppContainer = styled.div`
     min-height: 100vh;
 `;
 
-// TODO: Implement the app logic
+// App logic
 // 1. The neighborhoods should be filtered by current time period, @see `utils.js` - `getTimePeriod`
 //   - when the period is 0, only neighborhoods with value of 0 - 9 are displayed
 //   - When the period is 1, only neighborhoods with value of 10 - 19 are displayed, etc.

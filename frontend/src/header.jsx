@@ -140,7 +140,6 @@ const SymbolButton = styled.button`
   }
 `;
 
-// TODO: This component should contain the controls for the app
 // The controls are:
 // - A toggle group to select the currently active symbol
 //   - The buttons in the toggle group should have aria-label attribute with the symbol (for example `aria-label="@"`)
@@ -177,7 +176,7 @@ function Header({
     };
 
     return (
-        <HeaderContainer>
+        <HeaderContainer data-test-id="header">
             <HeaderTime>
                 {dateToString(currentDateTime)}
                 {isTimeFilterEnabled && (

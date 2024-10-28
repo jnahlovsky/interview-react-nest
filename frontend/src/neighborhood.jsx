@@ -87,7 +87,6 @@ const CenterGridCell = styled(GridCell)`
   }
 `;
 
-// TODO: Implement the neighborhood component
 // The component should display the value and the symbol of the neighborhood
 // The symbol is displayed as an icon from the `symbolToIcon` map
 //
@@ -121,19 +120,19 @@ function Neighborhood({
     };
 
     return (
-        <NeighborhoodContainer className="Neighborhood" onClick={handleClick}>
+        <NeighborhoodContainer data-test-id="neighborhood" onClick={handleClick}>
             <IconWrapper>
                 <IconSvg as={Icon} color={color} />
                 <Value>{value}</Value>
             </IconWrapper>
-            <PopoverGrid $isOpen={isPopoverOpen}>
+            <PopoverGrid $isOpen={isPopoverOpen} data-test-id="neighborhood-popover-grid">
                 {cells.flat().map((cellValue, index) => (
                     index === 4 ? (
-                        <CenterGridCell key={index}>
+                        <CenterGridCell key={index} data-test-id="neighborhood-popover-grid-center-cell">
                             <Icon />
                         </CenterGridCell>
                     ) : (
-                        <GridCell key={index}>
+                        <GridCell key={index} data-test-id="neighborhood-popover-grid-cell">
                             {cellValue}
                         </GridCell>
                     )
