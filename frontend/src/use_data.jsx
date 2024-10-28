@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+
 import generateInputData from './helpers/generate_input_data';
 
 /**
@@ -10,10 +11,8 @@ import generateInputData from './helpers/generate_input_data';
  */
 function useData() {
     const inputData = generateInputData();
-
     const [neighborhoods, setNeighborhoods] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -25,21 +24,25 @@ function useData() {
                     },
                     body: JSON.stringify({ matrix: inputData }),
                 });
-
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-
                 const data = await response.json();
                 setNeighborhoods(data);
                 setIsLoading(false);
             } catch (error) {
+                // SUGGESTION: use logger/notification service instead
+                // eslint-disable-next-line no-console
                 console.error('Error fetching data:', error);
                 setIsLoading(false);
             }
         };
-
         fetchData();
+
+        return () => {
+            setNeighborhoods([]);
+        };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return { neighborhoods, isLoading };

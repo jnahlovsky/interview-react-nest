@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import Header from './header';
+import { getTimePeriod } from './helpers/utils';
 import Neighborhood from './neighborhood';
 import useData from './use_data';
-import { getTimePeriod } from './helpers/utils';
 
 const AppContainer = styled.div`
     display: flex;
@@ -43,28 +43,27 @@ function App() {
     }, [activePopoverId, isTimeFilterEnabled]);
 
     const filteredNeighborhoods = neighborhoods.filter((neighborhood) => {
-        const isInTimePeriod = (currentPeriod === 5 ? 
-            neighborhood.value >= 50 && neighborhood.value <= 72 :
-            Math.floor(neighborhood.value / 10) === currentPeriod);
-        
+        const isInTimePeriod = (currentPeriod === 5
+            ? neighborhood.value >= 50 && neighborhood.value <= 72
+            : Math.floor(neighborhood.value / 10) === currentPeriod);
+
         const matchesSymbol = !selectedSymbol || neighborhood.type === selectedSymbol;
 
         if (isTimeFilterEnabled) {
             return isInTimePeriod && matchesSymbol;
         }
-        
+
         return matchesSymbol;
     });
 
     const handlePopoverToggle = (neighborhoodId) => {
-        setActivePopoverId(current => 
-            current === neighborhoodId ? null : neighborhoodId
+        setActivePopoverId((current) => (current === neighborhoodId ? null : neighborhoodId),
         );
     };
 
     return (
         <AppContainer>
-            <Header 
+            <Header
                 currentDateTime={currentDateTime}
                 currentPeriod={currentPeriod}
                 isTimeFilterEnabled={isTimeFilterEnabled}
@@ -76,7 +75,7 @@ function App() {
             {isLoading ? (<div>Processing data</div>) : (
                 <main>
                     {filteredNeighborhoods.map((neighborhood) => (
-                        <Neighborhood 
+                        <Neighborhood
                             key={neighborhood.id}
                             id={neighborhood.id}
                             value={neighborhood.value}

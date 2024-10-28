@@ -1,6 +1,6 @@
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
+import styled from 'styled-components';
 
 import { dateToString, symbolToIcon } from './helpers/utils';
 
@@ -73,7 +73,7 @@ const PeriodPill = styled.span`
   border-radius: 999px;
   font-size: 1.2rem;
   font-weight: bold;
-  background-color: ${props => props.$isFreezed ? 'var(--error-color)' : 'var(--success-color)'};
+  background-color: ${(props) => (props.$isFreezed ? 'var(--error-color)' : 'var(--success-color)')};
   color: white;
   margin-left: 0.5rem;
 `;
@@ -86,7 +86,7 @@ const ProgressBarContainer = styled.div`
   height: 3px;
   background-color: rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  opacity: ${props => props.$shouldShow ? 1 : 0};
+  opacity: ${(props) => (props.$shouldShow ? 1 : 0)};
   transition: opacity 0.3s ease;
 `;
 
@@ -106,7 +106,7 @@ const ProgressBar = styled.div`
   background-color: var(--success-color);
   transform-origin: left;
   transition: width 0.95s linear;
-  ${props => props.$isAnimating && `
+  ${(props) => props.$isAnimating && `
     animation: progress ${10 - (props.$initialSeconds % 10)}s linear forwards;
   `}
   ${progressAnimation}
@@ -119,8 +119,8 @@ const SymbolButtonGroup = styled.div`
 `;
 
 const SymbolButton = styled.button`
-  background: ${props => props.$isSelected ? 'var(--primary-color)' : 'var(--card-bg)'};
-  border: 2px solid ${props => props.$isSelected ? 'var(--primary-color)' : 'transparent'};
+  background: ${(props) => (props.$isSelected ? 'var(--primary-color)' : 'var(--card-bg)')};
+  border: 2px solid ${(props) => (props.$isSelected ? 'var(--primary-color)' : 'transparent')};
   padding: 8px;
   border-radius: 4px;
   cursor: pointer;
@@ -160,9 +160,9 @@ function Header({
     const seconds = currentDateTime.getSeconds();
     const milliseconds = currentDateTime.getMilliseconds();
     const periodKey = Math.floor(seconds / 10);
-    
+
     // Calculate initial progress based on current time within the 10-second interval
-    const initialProgress = ((seconds % 10) * 1000 + milliseconds) / 10000 * 100;
+    const initialProgress = (((seconds % 10) * 1000 + milliseconds) / 10000) * 100;
 
     useEffect(() => {
         if (!isTimeFilterEnabled || isPopoverOpen) {
@@ -173,7 +173,7 @@ function Header({
     }, [isTimeFilterEnabled, isPopoverOpen]);
 
     const handleSymbolClick = (symbol) => {
-        setSelectedSymbol(current => current === symbol ? null : symbol);
+        setSelectedSymbol((current) => (current === symbol ? null : symbol));
     };
 
     return (
@@ -213,13 +213,13 @@ function Header({
                 </ToggleLabel>
             </div>
             {isTimeFilterEnabled && (
-                <ProgressBarContainer 
-                    key={periodKey} 
+                <ProgressBarContainer
+                    key={periodKey}
                     $shouldShow={shouldShowProgress}
                 >
-                    <ProgressBar 
+                    <ProgressBar
                         style={{ width: `${initialProgress}%` }}
-                        $isAnimating={true} 
+                        $isAnimating={true}
                     />
                 </ProgressBarContainer>
             )}

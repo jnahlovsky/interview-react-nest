@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
+
 import { symbolToIcon } from './helpers/utils';
 
 const NeighborhoodContainer = styled.div`
@@ -37,7 +37,7 @@ const IconWrapper = styled.button`
 const IconSvg = styled.svg`
   width: 48px;
   height: 48px;
-  fill: ${props => props.color};
+  fill: ${(props) => props.color};
 `;
 
 const Value = styled.span`
@@ -63,7 +63,7 @@ const PopoverGrid = styled.div`
   transition: opacity 0.3s ease, visibility 0.3s ease;
   z-index: 10;
 
-  ${props => props.$isOpen && `
+  ${(props) => props.$isOpen && `
     opacity: 1;
     visibility: visible;
   `}
@@ -104,17 +104,17 @@ const CenterGridCell = styled(GridCell)`
 //
 // The component displaying the icon and value should be a button
 
-function Neighborhood({ 
-    id, 
-    symbol, 
-    value, 
-    cells, 
-    isPopoverOpen, 
-    onPopoverToggle 
+function Neighborhood({
+    id,
+    symbol,
+    value,
+    cells,
+    isPopoverOpen,
+    onPopoverToggle,
 }) {
     const Icon = symbolToIcon[symbol];
     const percentage = (value / 72) * 100;
-    const color = `rgb(${255 - (255 * percentage / 100)}, 255, ${255 - (255 * percentage / 100)})`;
+    const color = `rgb(${255 - ((255 * percentage) / 100)}, 255, ${255 - ((255 * percentage) / 100)})`;
 
     const handleClick = () => {
         onPopoverToggle(id);
