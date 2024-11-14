@@ -48,12 +48,59 @@ const reset = `
 export const GlobalStyle = createGlobalStyle`
     ${reset}
 
+    :root {
+        --bg-color: #1a1a1a;
+        --text-color: #e0e0e0;
+        --primary-color: #4CAF50;
+        --secondary-color: #2196F3;
+        --accent-color: #FF4081;
+        --card-bg: #2c2c2c;
+        --hover-color: #3c3c3c;
+        --error-color: #f44336;
+        --success-color: #4CAF50;
+    }
+
     html {
         font-size: 10px;
+        box-sizing: border-box;
+    }
+
+    *, *:before, *:after {
+        box-sizing: inherit;
     }
 
     body {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
-        font-size: 1.4rem;
+        font-family: 'Roboto', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+        font-size: 1.6rem;
+        line-height: 1.5;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+    }
+
+    #root {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    main {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 1.6rem;
+        padding: 2rem;
+    }
+
+    button {
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        padding: 0.8rem 1.6rem;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+            background-color: darken(var(--primary-color), 10%);
+        }
     }
 `;

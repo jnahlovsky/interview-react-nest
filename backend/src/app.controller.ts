@@ -9,8 +9,7 @@ export class AppController {
     // @see https://docs.nestjs.com/controllers#request-payloads
     @Post('/')
     getMatrixNeighborhoods(@Body() matrixBodyInput: { matrix: string }) {
-        // TODO: After you implement the `parseAndRotateMatrix` method in the `AppService` replace `parseMatrix` with it
-        const matrix = this.appService.parseMatrix(matrixBodyInput.matrix);
+        const matrix = this.appService.parseAndRotateMatrix(matrixBodyInput.matrix);
         return this.appService.matrixToNeighborhoods(matrix);
     }
 }

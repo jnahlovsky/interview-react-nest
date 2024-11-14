@@ -34,5 +34,5 @@ export function dateToString(date) {
     // ISO String is in format 'YYYY-MM-DDTHH:mm:SS.SSSZ', so we replace the 'T' with a space and
     // keep only the part up to the seconds, normally we would use day.js for this, but there is no reason to
     // add another dependency for this simple task
-    return date.toIsoString().replace('T', ' ').slice(0, 19);
+    return date.toISOString().replace('T', ' ').slice(0, 19);
 }

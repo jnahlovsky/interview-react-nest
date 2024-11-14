@@ -1,8 +1,17 @@
 import Header from './header';
 
-// TODO: Add component tests for the header component, it's up to you what you want to test and how
 describe('<Header />', () => {
-    it('renders', () => {
-        cy.mount(<Header />);
+    it('renders with basic props', () => {
+        const props = {
+            isTimeFilterEnabled: false,
+            setIsTimeFilterEnabled: () => {},
+            currentDateTime: new Date(),
+            currentPeriod: 0,
+            isPopoverOpen: false,
+            selectedSymbol: null,
+            setSelectedSymbol: () => {},
+        };
+        cy.mount(<Header {...props} />);
+        cy.get('[data-test-id="header"]').should('exist');
     });
 });
